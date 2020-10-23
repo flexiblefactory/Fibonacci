@@ -26,42 +26,45 @@ function App() {
 
   const [inputInt, setInputInt] = React.useState(2000)
   const [page, setPage] = React.useState(1)
-  
+
   const userInput = parseInt(inputInt) || 0
   const rangeError = !userInput || userInput < 0 || userInput > 2000
   const fibs = sequence.filter(f => f.number <= userInput)
   const totalPages = Math.ceil(fibs.length / PAGE_SIZE)
-  
+
   const pageNum = Math.max(1, parseInt(page))
-  const skip = (pageNum-1)*PAGE_SIZE
+  const skip = (pageNum - 1) * PAGE_SIZE
   const pageError = (!pageNum || pageNum < 0 || pageNum > totalPages)
 
   return (
     <div className="App">
-     
+
       {pageError && <div className="error">Please enter a page number up to {totalPages}</div>}
-        {rangeError && <div className="error">Please enter an integer up to 2000</div>}
-        
-              <input style={{ width: '45px' }} type="text" onChange={e => { setInputInt(e.target.value) }} value={inputInt}></input>
-      <h1>Showing fibonacci sequence up to {userInput}</h1>
+      {rangeError && <div className="error">Please enter an integer up to 2000</div>}
+      <label>Show fib sequence up to: </label>
+      <input style={{ width: '45px' }} type="text" onChange={e => { setInputInt(e.target.value) }} value={inputInt}></input>
+
 
       {
-          !pageError && !rangeError &&
+        !pageError && !rangeError &&
+        <div>
+          <h1>Showing fibonacci sequence up to {userInput}</h1>
           <div>
-            <div>
-              <div>(page {pageNum} of {totalPages})</div>
-            </div>
-            <div>{fibs.slice(skip,skip+PAGE_SIZE).map(f => <DisplayInteger n={f.number}></DisplayInteger>)}</div>
-
+            <div>(page {pageNum} of {totalPages})</div>
           </div>
-          }
+          <div>{fibs.slice(skip, skip + PAGE_SIZE).map(f => <DisplayInteger n={f.number}></DisplayInteger>)}</div>
+          <div>
 
+            {pageNum !== 1 && <button onClick={() => setPage(pageNum - 1)}>previous page</button>}
+            {pageNum !== totalPages && <button onClick={() => setPage(pageNum + 1)}>next page</button>}
+          </div>
 
+        </div>
+      }
       <div>
         <label>page</label><input style={{ width: '45px' }} type="text" onChange={e => { setPage(e.target.value) }} value={page}></input>
       </div>
-      {pageNum !== 1 && <button onClick={() => setPage(pageNum - 1)}>previous page</button>}
-      {pageNum !== totalPages && <button onClick={() => setPage(pageNum + 1)}>next page</button>}
+
     </div>
   );
 }
