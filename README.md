@@ -1,3 +1,3 @@
 # Fibonacci
 
-Fibonacci sequence generator for dev test.
+Fibonacci sequence display for dev test.
