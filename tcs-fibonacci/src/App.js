@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import fibonacci from 'fibonacci-fast';
+import isComposite from '@extra-number/is-composite';
 
 function App() {
 
@@ -14,7 +15,7 @@ function App() {
     <div className="App">
       {rangeError&& 'error'}      <input style={{ width: '45px' }} type="text" onChange={e => { setInputInt(e.target.value) }} value={inputInt}></input>
       {userInput}
-      <div>{fibs.map(f=>f.number.toString()).join(',')}</div>
+      <div>{fibs.map(f=><div>{f.number.toString() + ' '+ (isComposite(f.number) ? 'composite':'prime')}</div>)}</div>
       
     </div>
   );
