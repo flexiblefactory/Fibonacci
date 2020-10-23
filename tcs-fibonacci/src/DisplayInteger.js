@@ -1,7 +1,7 @@
 import React from 'react';
 import isComposite from '@extra-number/is-composite';
 const SATURDAY = 6
-const SUNDAY = 7
+const SUNDAY = 0
 function isWeekend() {
   const day = new Date().getDay()
   return day === SATURDAY || day === SUNDAY
