@@ -1,34 +1,31 @@
 import React from 'react';
 import './App.css';
 import fibonacci from 'fibonacci-fast';
-import isComposite from '@extra-number/is-composite';
-const sequence = fibonacci.array(1, 18)
+import DisplayInteger from './DisplayInteger';
+
+const sequence = []
 const PAGE_SIZE = 10
+const MAX = 2000//Number.MAX_SAFE_INTEGER
 
-const SATURDAY = 6
-const SUNDAY = 7
 
-function isWeekend() {
-  const day = new Date().getDay()
-  return day === SATURDAY || day === SUNDAY
+for (let i=0;;i++) {
+  const fib=fibonacci.get(i)
+  if(fib.number>MAX){
+    break;
+  }
+  else{
+    sequence.push(fib)
+  }
 }
 
-function DisplayInteger({ n }) {
-  const numberIsPrime = !isComposite(n)
-  const weekend = isWeekend()
-  const primeLabel = weekend ? 'wic' : 'tic'
-  const compositeLabel = weekend ? 'woe' : 'toe'
-  return <div style={{ color: numberIsPrime ? 'blue' : 'green' }}>
-    {n.toString()} {numberIsPrime ? primeLabel : compositeLabel}
-  </div>
-}
+
 function App() {
 
-  const [inputInt, setInputInt] = React.useState(2000)
+  const [inputInt, setInputInt] = React.useState(MAX)
   const [page, setPage] = React.useState(1)
 
   const userInput = parseInt(inputInt) || 0
-  const rangeError = !userInput || userInput < 0 || userInput > 2000
+  const rangeError = !userInput || userInput < 0 || userInput > MAX
   const fibs = sequence.filter(f => f.number <= userInput)
   const totalPages = Math.ceil(fibs.length / PAGE_SIZE)
 
@@ -40,7 +37,7 @@ function App() {
     <div className="App">
 
       {pageError && <div className="error">Please enter a page number up to {totalPages}</div>}
-      {rangeError && <div className="error">Please enter an integer up to 2000</div>}
+      {rangeError && <div className="error">Please enter an integer up to {MAX}</div>}
       <label>Show fib sequence up to: </label>
       <input style={{ width: '45px' }} type="text" onChange={e => { setInputInt(e.target.value) }} value={inputInt}></input>
 
@@ -52,7 +49,7 @@ function App() {
           <div>
             <div>(page {pageNum} of {totalPages})</div>
           </div>
-          <div>{fibs.slice(skip, skip + PAGE_SIZE).map(f => <DisplayInteger n={f.number}></DisplayInteger>)}</div>
+          <div>{fibs.slice(skip, skip + PAGE_SIZE).map((f,i) => <DisplayInteger key={i} n={f.number}></DisplayInteger>)}</div>
           <div>
 
             {pageNum !== 1 && <button onClick={() => setPage(pageNum - 1)}>previous page</button>}
