@@ -13,6 +13,6 @@ export default function DisplayInteger({ n }) {
   const primeLabel = weekend ? 'wic' : 'tic'
   const compositeLabel = weekend ? 'woe' : 'toe'
   return <div style={{ color: numberIsPrime ? 'blue' : 'green' }}>
-    {n.toString()} {numberIsPrime ? primeLabel : compositeLabel}
+    {/* n.toString() */} {numberIsPrime ? primeLabel : compositeLabel}
   </div>
 }
