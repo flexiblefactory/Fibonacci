@@ -3,22 +3,16 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+
+  const [inputInt, setInputInt] = React.useState(2000)
+  const userInput = parseInt(inputInt) || 0
+  const rangeError = !userInput || userInput <0 
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {rangeError&& 'error'}      <input style={{ width: '45px' }} type="text" onChange={e => { setInputInt(e.target.value) }} value={inputInt}></input>
+      {userInput}
     </div>
   );
 }
